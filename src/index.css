@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+
+@layer base {
+  h1 {
+    @apply font-bold;
+  }
+}
+@layer components {
+  .bg-dark {
+    @apply bg-gradient-to-br from-purple-800 via-pink-700 to-cyan-800 text-white shadow-lg transition-colors duration-300;
+  } 
+  .bg-light {
+    @apply bg-gradient-to-br from-blue-100 to-purple-100 text-gray-800 shadow-md transition-colors duration-300;
+  }
+    .btn {
+    @apply px-4 py-2 cursor-pointer rounded-md;
+  }
+}
