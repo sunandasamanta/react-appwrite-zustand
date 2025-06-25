@@ -4,14 +4,12 @@ const APPWRITE_ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT;
 const APPWRITE_PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 
 const client = new Client()
-    .setEndpoint(APPWRITE_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID);
+  .setEndpoint(APPWRITE_ENDPOINT)
+  .setProject(APPWRITE_PROJECT_ID);
 
 const account = new Account(client);
 
 class AuthServices {
-  
-
   async signup(name: string, email: string, password: string) {
     await account.create(ID.unique(), email, password, name);
     return this.login(email, password);

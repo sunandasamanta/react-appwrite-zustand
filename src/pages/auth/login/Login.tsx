@@ -35,7 +35,7 @@ export default function Login() {
   const onSubmit = async () => {
     await login(formValue);
     if (!loading && user) {
-      navigate("/profile");
+      navigate("profile");
     }
   }
 

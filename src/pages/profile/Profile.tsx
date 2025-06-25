@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import useAuthStore from "../../store/authStore"
 
 export default function () {
-  const { user, loading, logout } = useAuthStore();
+
+  const { getUser, user, loading, logout } = useAuthStore();
+  useEffect(()=> {
+    getUser();
+  })
+
   return !loading && user && (
   <div>
     <p className="font-medium text-black">{user.name}</p>
