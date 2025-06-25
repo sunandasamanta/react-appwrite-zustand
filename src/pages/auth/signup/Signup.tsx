@@ -16,10 +16,10 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex rounded items-center justify-center bg-gray-50">
+    <div className="flex rounded items-center justify-center bg-gray-50 text-gray-700">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow">
         <h1 className="mb-6 text-2xl font-bold text-gray-800">Create your account</h1>
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form className="space-y-5">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
@@ -66,6 +66,7 @@ export default function Signup() {
             />
           </div>
           <button
+            onClick={handleSubmit}
             type="submit"
             disabled={loading}
             className="w-full rounded bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-700 focus:outline-none"

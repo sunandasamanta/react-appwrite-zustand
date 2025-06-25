@@ -3,38 +3,37 @@ import { Account, Client, ID } from "appwrite";
 const APPWRITE_ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT;
 const APPWRITE_PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 
-class AuthService {
-  account: Account;
-  private client: Client;
-  constructor() {
-    this.client = new Client()
-      .setEndpoint(APPWRITE_ENDPOINT)
-      .setProject(APPWRITE_PROJECT_ID);
-    this.account = new Account(this.client);
-  }
+const client = new Client()
+    .setEndpoint(APPWRITE_ENDPOINT)
+    .setProject(APPWRITE_PROJECT_ID);
 
-  signup(name: string, email: string, password: string) {
-    this.account.create(ID.unique(), email, password, name);
+const account = new Account(client);
+
+class AuthServices {
+  
+
+  async signup(name: string, email: string, password: string) {
+    await account.create(ID.unique(), email, password, name);
     return this.login(email, password);
   }
 
-  login(email: string, password: string) {
-    return this.account.createEmailPasswordSession(email, password);
+  async login(email: string, password: string) {
+    return await account.createEmailPasswordSession(email, password);
   }
 
-  logout() {
-    this.account.deleteSession("current");
+  async logout() {
+    await account.deleteSession("current");
   }
 
-  logoutAllDevices() {
-    this.account.deleteSessions();
+  async logoutAllDevices() {
+    await account.deleteSessions();
   }
 
-  getCurrentUser() {
-    return this.account.get();
+  async getCurrentUser() {
+    return await account.get();
   }
 }
 
-const authService = new AuthService();
+const authServices = new AuthServices();
 
-export default authService;
+export default authServices;

@@ -17,6 +17,11 @@ type State = {
 
 type Actions = {
   getUser: () => Promise<void>;
+  signup: (userDetails: {
+    email: string;
+    password: string;
+    name: string;
+  }) => Promise<void>;
   login: (userCredentials: {
     email: string;
     password: string;
@@ -25,7 +30,7 @@ type Actions = {
   logoutAllDevices: () => Promise<void>;
 };
 
-const { login, getCurrentUser, logout, logoutAllDevices } = authService;
+const { signup, login, getCurrentUser, logout, logoutAllDevices } = authService;
 
 const useAuthStore = create<State & Actions>((set) => ({
   user: null,
@@ -39,11 +44,21 @@ const useAuthStore = create<State & Actions>((set) => ({
       set({ user: null, loading: false });
     }
   },
+  signup: async ({ email, password, name }) => {
+    try {
+      await signup(email, password, name);
+      const user = await getCurrentUser();
+      set({ user: user, loading: false });
+    } catch (error) {
+      console.error("Signup failed :: ", error);
+      
+    }
+  },
   login: async ({ email, password }) => {
     try {
       await login(email, password);
       const user = await getCurrentUser();
-      set({ user });
+      set({ user: user, loading: false });
     } catch (error) {
       console.error("Login failed :: ", error);
       set({ user: null, loading: false });
@@ -62,9 +77,8 @@ const useAuthStore = create<State & Actions>((set) => ({
       await logoutAllDevices();
     } catch (error) {
       console.error("Logout from all devices failed :: ", error);
-      
     }
-  }
+  },
 }));
 
 export default useAuthStore;
